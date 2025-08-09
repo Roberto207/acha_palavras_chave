@@ -2,11 +2,8 @@ from collections import Counter
 import string
 import cohere
 import whisper
-co = cohere.ClientV2(api_key="jgZB8bBEvGDomXoPFOV8EBPgbM30CDsDwMw2QKy0")
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('tokenizers/punkt_tab/english/')
-# nltk.download('punkt_tab')
+co = cohere.ClientV2(api_key="SUA_CHAVE_API_COHERE_AQUI") #COLOQUE AQUI SUA CHAVE API COHERE
+
 def transcrever_audio(arquivo_audio):
     model = whisper.load_model("base")  # tiny, base, small, medium, large
     resultado = model.transcribe(arquivo_audio, language='pt')
@@ -29,10 +26,11 @@ response = co.chat(
     messages=[
         {
             "role": "user",
-            "content":(f'make a headline like a subtitle that will be edited and putted in the middle of the video)about this transcription (something with 2 to 4 words) {roteiro}'),
+            "content":(f'me de as palavras chave do seguinte texto: {roteiro}'), #aqui voce coloca o comando q quer q a IA geradora de texto faca
               
         }
     ],
 )
 
 print('terceiro metodo,palavras chave:\n',response.message.content[0].text)
+
