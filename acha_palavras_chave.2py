@@ -1,0 +1,29 @@
+from collections import Counter
+import string
+import whisper
+
+def transcrever_audio(arquivo_audio):
+    model = whisper.load_model("base")  # tiny, base, small, medium, large
+    resultado = model.transcribe(arquivo_audio, language='pt')
+    return resultado['text']
+
+
+escolha = str(input("Deseja usar o texto pronto ou um video trasncrito,digite 1 para pronto e 2 para transcrito: "))
+if escolha == '1':
+    roteiro_manual = str(input("Digite o texto pronto: "))
+    roteiro = roteiro_manual
+elif escolha == '2':
+    caminho_arquivo = (input("Digite o caminho do arquivo do vídeo  a ser transcrito: ")).strip()
+    roteiro = transcrever_audio(caminho_arquivo)
+    print("\n--- Roteiro transcrito ---\n")
+    print(roteiro)
+
+
+def achar_pchaves(roteieo):
+    # Estratégia simples: usar os 8 primeiros tokens relevantes
+    palavras = roteiro.split() #pegamo o texto trasncrito e fazemos uma lista com suas palavras
+    palavras_chave = [p for p in palavras if len(p) > 3][:8] #pegando as 8 palavras/tokens mais relevantes
+    consulta = ' '.join(palavras_chave) #ajustando a lista pra consulta
+    return consulta
+print(f'as palavras chave pelo metodo 2 foram :{achar_pchaves(roteiro)}')
+
