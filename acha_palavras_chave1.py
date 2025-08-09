@@ -3,9 +3,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
-import cohere
 import whisper
-co = cohere.ClientV2(api_key="jgZB8bBEvGDomXoPFOV8EBPgbM30CDsDwMw2QKy0")
+
 # nltk.download('punkt')
 # nltk.download('stopwords')
 # nltk.download('tokenizers/punkt_tab/english/')
@@ -42,25 +41,3 @@ def extrair_palavras_chave(texto, n=5):
 palavras_chave = extrair_palavras_chave(roteiro)
 print("Palavras-chave extraídas:", palavras_chave)
 
-#outr modo de fazer 
-def achar_pchaves(roteieo):
-    # Estratégia simples: usar os 8 primeiros tokens relevantes
-    palavras = roteiro.split() #pegamo o texto trasncrito e fazemos uma lista com suas palavras
-    palavras_chave = [p for p in palavras if len(p) > 3][:8] #pegando as 8 palavras/tokens mais relevantes
-    consulta = ' '.join(palavras_chave) #ajustando a lista pra consulta
-    return consulta
-print(f'as palavras chave pelo metodo 2 foram :{achar_pchaves(roteiro)}')
-
-#outro modo de fazer
-
-response = co.chat(
-    model="command-a-03-2025",
-    messages=[
-        {
-            "role": "user",
-            "content":(f'make a headline like a subtitle that will be edited and putted in the middle of the video)about this transcription (something with 2 to 4 words) {roteiro}'),
-              
-        }
-    ],
-)
-print('terceiro metodo:\n',response.message.content[0].text)
