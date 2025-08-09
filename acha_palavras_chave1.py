@@ -9,6 +9,7 @@ import whisper
 # nltk.download('stopwords')
 # nltk.download('tokenizers/punkt_tab/english/')
 # nltk.download('punkt_tab')
+#talvez na primeira vez que voce rode o codigo,seja necessario fazer download desses nltks acima(exemplo: nltk.download('punkt'))
 def transcrever_audio(arquivo_audio):
     model = whisper.load_model("base")  # tiny, base, small, medium, large
     resultado = model.transcribe(arquivo_audio, language='pt')
@@ -40,4 +41,5 @@ def extrair_palavras_chave(texto, n=5):
 
 palavras_chave = extrair_palavras_chave(roteiro)
 print("Palavras-chave extraídas:", palavras_chave)
+
 
